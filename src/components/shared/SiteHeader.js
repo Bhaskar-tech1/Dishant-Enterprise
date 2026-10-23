@@ -25,17 +25,11 @@ export default function SiteHeader() {
 
   useEffect(() => {
     if (!open) return undefined;
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousDocumentOverflow = document.documentElement.style.overflow;
     const closeOnEscape = (event) => {
       if (event.key === 'Escape') setOpen(false);
     };
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
     window.addEventListener('keydown', closeOnEscape);
     return () => {
-      document.body.style.overflow = previousBodyOverflow;
-      document.documentElement.style.overflow = previousDocumentOverflow;
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [open]);
@@ -43,7 +37,7 @@ export default function SiteHeader() {
   return (
     <>
       <div className="announcement"><span className="announcement__dot" />{siteConfig.announcement}<Link href="/bulk-orders">Enquire for bulk orders <span aria-hidden="true">→</span></Link></div>
-      <header className="site-header">
+      <header className={`site-header ${open ? 'is-open' : ''}`}>
         <div className="container site-header__inner">
           <Link href="/" className="brand" aria-label="Dishanth Enterprises home" onClick={close}>
             <span className="brand__logo"><Image src={siteConfig.logo} alt="" width={58} height={58} priority /></span>
