@@ -5,3 +5,5 @@ out/
 .vercel/
 .env*
 npm-debug.log*
+.env.local
+.data/

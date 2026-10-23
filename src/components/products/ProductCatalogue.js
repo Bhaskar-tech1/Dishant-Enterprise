@@ -1,18 +1,22 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowDownWideNarrow, ArrowUpDown, Search, SlidersHorizontal, X } from 'lucide-react';
 import { categories } from '@/data/categories';
-import { standardProducts } from '@/data/products';
 import ProductCard from '@/components/products/ProductCard';
 
 function lowestPrice(product) {
-  return Math.min(...(product.variants || []).map((variant) => variant.salePrice));
+  if (product.salePrice) return product.salePrice;
+  if (product.variants && product.variants.length > 0) {
+    return Math.min(...product.variants.map((variant) => variant.salePrice || 0));
+  }
+  return 0;
 }
 
-export default function ProductCatalogue({ initialCategory = '' }) {
+export default function ProductCatalogue({ initialCategory = '', initialProducts = [] }) {
   const router = useRouter();
+  const [items, setItems] = useState(initialProducts);
   const [selectedCategories, setSelectedCategories] = useState(() => {
     const initial = Array.isArray(initialCategory) ? initialCategory : [initialCategory];
     return [...new Set(initial.filter((value) => categories.some((item) => item.id === value)))];
@@ -23,9 +27,20 @@ export default function ProductCatalogue({ initialCategory = '' }) {
   const [sort, setSort] = useState('featured');
   const [filtersOpen, setFiltersOpen] = useState(false);
 
+  useEffect(() => {
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setItems(data.filter((p) => p.type === 'product'));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
-    const result = standardProducts.filter((product) => {
+    const result = items.filter((product) => {
       const matchesSearch = !needle || `${product.name} ${product.description}`.toLowerCase().includes(needle);
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
       const price = lowestPrice(product);
@@ -36,7 +51,7 @@ export default function ProductCatalogue({ initialCategory = '' }) {
     if (sort === 'name') result.sort((a, b) => a.name.localeCompare(b.name));
     if (sort === 'featured') result.sort((a, b) => Number(b.featured) - Number(a.featured));
     return result;
-  }, [selectedCategories, query, minPrice, maxPrice, sort]);
+  }, [items, selectedCategories, query, minPrice, maxPrice, sort]);
 
   function updateCategory(value) {
     const nextCategories = !value
@@ -88,8 +103,28 @@ export default function ProductCatalogue({ initialCategory = '' }) {
         <p><strong>{filtered.length}</strong> {filtered.length === 1 ? 'item' : 'items'}{activeCategories.length ? <> in <strong>{activeCategories.map((item) => item.label).join(', ')}</strong></> : null}</p>
         {hasFilters && <button type="button" className="clear-filters" onClick={clearFilters}>Clear filters <X size={14} /></button>}
       </div>
-      {filtered.length ? <div className="product-grid product-grid--catalogue">{filtered.map((product) => <ProductCard key={product.id} product={{ ...product, categoryLabel: categories.find((item) => item.id === product.category)?.label }} />)}</div> : <div className="empty-state"><span><Search size={22} /></span><h2>No products match those filters</h2><p>Try another search or clear the filters to see the full selection.</p><button className="button button--navy" type="button" onClick={clearFilters}>Clear filters</button></div>}
-      <p className="demo-note demo-note--catalogue">Prices and catalogue items are editable examples for this frontend preview.</p>
+      {filtered.length ? (
+        <div className="product-grid product-grid--catalogue">
+          {filtered.map((product) => (
+            <ProductCard key={product.id} product={{ ...product, categoryLabel: categories.find((item) => item.id === product.category)?.label }} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty-state" style={{ padding: '60px 20px', textAlign: 'center' }}>
+          <div style={{ fontSize: '36px', marginBottom: '12px' }}>🛍️</div>
+          <h2 style={{ fontSize: '20px', fontWeight: 700, margin: '0 0 8px' }}>
+            {hasFilters ? 'No products match those filters' : 'No products in store yet'}
+          </h2>
+          <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>
+            {hasFilters ? 'Try another search or clear the filters to see the full catalogue.' : 'Products will appear here once added in the admin dashboard.'}
+          </p>
+          {hasFilters && (
+            <button className="button button--navy" type="button" onClick={clearFilters} style={{ marginTop: '16px' }}>
+              Clear filters
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

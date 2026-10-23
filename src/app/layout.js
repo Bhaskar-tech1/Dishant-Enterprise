@@ -1,7 +1,6 @@
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
-import SiteHeader from '@/components/shared/SiteHeader';
-import SiteFooter from '@/components/shared/SiteFooter';
+import StoreShell from '@/components/shared/StoreShell';
 import ScrollAnimations from '@/components/shared/ScrollAnimations';
 import { siteConfig } from '@/config/site';
 
@@ -17,9 +16,7 @@ export default function RootLayout({ children }) {
       <body>
         <CartProvider>
           <ScrollAnimations />
-          <SiteHeader />
-          <main>{children}</main>
-          <SiteFooter />
+          <StoreShell>{children}</StoreShell>
         </CartProvider>
       </body>
     </html>

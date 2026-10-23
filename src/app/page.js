@@ -2,12 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Boxes, Leaf, PackageCheck, Sparkles } from 'lucide-react';
 import HeroSlider from '@/components/home/HeroSlider';
+import FeaturedProducts from '@/components/home/FeaturedProducts';
 import TestimonialsSlider from '@/components/home/TestimonialsSlider';
 import SectionHeading from '@/components/shared/SectionHeading';
 import CategoryCard from '@/components/shared/CategoryCard';
-import ProductCard from '@/components/products/ProductCard';
 import { homeCategories } from '@/data/categories';
-import { featuredProducts } from '@/data/products';
 import { testimonials } from '@/data/testimonials';
 import { heroImages, productImages } from '@/data/images';
 
@@ -26,12 +25,9 @@ export default function HomePage() {
 
       <section className="section section--featured">
         <div className="container">
-          <SectionHeading eyebrow="A few favourites" title="Good things to keep close" text="A sample of the thoughtful pantry picks in our collection." />
-          <div className="product-grid product-grid--four" data-aos="fade-up">
-            {featuredProducts.filter((product) => product.type === 'product').slice(0, 4).map((product) => <ProductCard key={product.id} product={product} />)}
-          </div>
+          <SectionHeading eyebrow="A few favourites" title="Good things to keep close" text="Featured pantry picks and curated combinations from our collection." />
+          <FeaturedProducts />
           <div className="featured-products__action"><Link className="button button--navy" href="/products">View all products <ArrowRight size={16} /></Link></div>
-          <p className="demo-note">Illustrative product selection and pricing · update with confirmed catalogue details</p>
         </div>
       </section>
 

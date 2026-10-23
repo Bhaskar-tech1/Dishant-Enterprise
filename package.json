@@ -9,7 +9,12 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.10.0",
     "aos": "^2.3.4",
+    "cloudinary": "^2.11.0",
+    "firebase": "^13.1.0",
+    "firebase-admin": "^14.5.0",
+    "jose": "^6.2.13",
     "lucide-react": "^0.468.0",
     "next": "^15.5.4",
     "react": "^19.1.1",

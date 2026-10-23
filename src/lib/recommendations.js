@@ -1,5 +1,3 @@
-import { products } from '@/data/products';
-
 const meaningfulWords = (product) => new Set(
   `${product.name} ${product.description}`
     .toLowerCase()
@@ -7,7 +5,7 @@ const meaningfulWords = (product) => new Set(
     .filter((word) => word.length > 3),
 );
 
-export function getRelatedProducts(product, limit = 4) {
+export function getRelatedProducts(product, products = [], limit = 4) {
   const words = meaningfulWords(product);
 
   return products

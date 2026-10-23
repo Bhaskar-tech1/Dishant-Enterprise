@@ -13,11 +13,12 @@ export default function CartContent() {
   const { items, count, hydrated, changeQuantity, removeItem } = useCart();
   const [feedback, setFeedback] = useState('');
   const lines = items.map((item) => {
-    const product = findProduct(item.productId);
+    const product = item.product || findProduct(item.productId);
     if (!product) return null;
-    const variant = product.variants?.find((option) => option.id === item.variantId);
-    const price = variant?.salePrice ?? product.salePrice;
-    return { ...item, product, variant, price, variantLabel: variant?.label || product.variantLabel || '' };
+    const variant = item.variant || product.variants?.find((option) => option.id === item.variantId);
+    const price = Number(item.price ?? variant?.salePrice ?? product.salePrice ?? 0);
+    const variantLabel = item.variantLabel || variant?.label || product.variantLabel || '';
+    return { ...item, product, variant, price, variantLabel };
   }).filter(Boolean);
   const subtotal = lines.reduce((total, line) => total + line.price * line.quantity, 0);
 
