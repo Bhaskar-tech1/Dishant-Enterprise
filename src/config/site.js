@@ -11,5 +11,10 @@ export const siteConfig = {
   locationUrl: 'https://www.google.com/maps?cid=13036115457619345052',
   mapEmbedUrl: 'https://www.google.com/maps?cid=13036115457619345052&output=embed',
   website: 'https://mybusinessweb.in/whatsapp-store/dishanth-enterprise',
-  socials: [{ label: '@dishanthenterprise', href: 'https://www.instagram.com/dishanthenterprise/' }],
+  socials: [
+    { label: 'Instagram', href: 'https://www.instagram.com/dishanthenterprise/', icon: 'instagram' },
+    { label: 'Facebook', href: 'https://www.facebook.com/share/19WXXNbni1/', icon: 'facebook' },
+    { label: 'WhatsApp community', href: 'https://whatsapp.com/channel/0029Vb8kpcLL7UVPcxGytN19', icon: 'whatsapp' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@dishanthenterprisedryfruits', icon: 'youtube' },
+  ],
 };
