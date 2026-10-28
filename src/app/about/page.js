@@ -2,8 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Boxes, Instagram, Leaf, MessageCircle, PackageCheck, Youtube } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata = { title: 'About us' };
+export const metadata = createPageMetadata({ title: 'About Dishanth Enterprise', description: 'Learn about Dishanth Enterprise, a dry fruit store and pantry supplier serving Rajampet and customers looking for thoughtful everyday and bulk selections.', path: '/about' });
 
 const socialMedia = [
   { key: 'instagram', label: 'Instagram', eyebrow: 'Follow along', icon: Instagram },
@@ -37,7 +38,7 @@ export default function AboutPage() {
               const social = siteConfig.socials.find((item) => item.icon === key);
               if (!social) return null;
               const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=8&data=${encodeURIComponent(social.href)}`;
-              return <a className={`about-social__card about-social__card--${key}`} key={social.href} href={social.href} target="_blank" rel="noreferrer"><span className="about-social__qr"><img src={qrUrl} alt={`${label} QR code`} loading="lazy" /></span><span className="about-social__copy"><small>{eyebrow}</small><strong><Icon size={17} />{label}</strong><span>Scan or tap to open <ArrowRight size={15} /></span></span></a>;
+              return <a className={`about-social__card about-social__card--${key}`} key={social.href} href={social.href} target="_blank" rel="noreferrer"><span className="about-social__qr"><Image src={qrUrl} alt={`${label} QR code`} width={220} height={220} unoptimized /></span><span className="about-social__copy"><small>{eyebrow}</small><strong><Icon size={17} />{label}</strong><span>Scan or tap to open <ArrowRight size={15} /></span></span></a>;
             })}
           </div>
         </div>

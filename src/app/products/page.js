@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import ProductCatalogue from '@/components/products/ProductCatalogue';
 import { getAllProducts } from '@/lib/products-store';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata = { title: 'Products' };
+export const metadata = createPageMetadata({ title: 'Dry Fruits, Nuts & Seeds', description: 'Browse dry fruits, nuts, seeds, honey items, snacks and pantry favourites from Dishanth Enterprise in Rajampet.', path: '/products' });
 export const dynamic = 'force-dynamic';
 
 export default async function ProductsPage({ searchParams }) {

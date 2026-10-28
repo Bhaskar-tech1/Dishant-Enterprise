@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import { BadgePercent, Boxes, Building2, Gift, Store } from 'lucide-react';
 import BulkEnquiryForm from '@/components/forms/BulkEnquiryForm';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata = { title: 'Corporate & bulk orders' };
+export const metadata = createPageMetadata({ title: 'Wholesale & Bulk Dry Fruit Orders', description: 'Enquire about dry fruits, nuts, seeds, honey and curated packs for wholesale, retailers, gifting, events and larger requirements.', path: '/bulk-orders' });
 
 const services = [
   { title: 'Corporate gifting', description: 'Thoughtful gifts for teams and clients', icon: Gift },

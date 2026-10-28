@@ -2,8 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Gift, Sparkles } from 'lucide-react';
 import ComboProducts from '@/components/products/ComboProducts';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata = { title: 'Curated combos' };
+export const metadata = createPageMetadata({ title: 'Dry Fruit Combo Packs', description: 'Explore curated dry fruit, seed, snack and gifting combo packs from Dishanth Enterprise.', path: '/combos' });
 
 export default function CombosPage() {
   return (

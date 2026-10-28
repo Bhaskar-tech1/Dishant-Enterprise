@@ -9,10 +9,19 @@ import CategoryCard from '@/components/shared/CategoryCard';
 import { homeCategories } from '@/data/categories';
 import { testimonials } from '@/data/testimonials';
 import { heroImages, productImages } from '@/data/images';
+import JsonLd from '@/components/seo/JsonLd';
+import { businessJsonLd, createPageMetadata, websiteJsonLd } from '@/lib/seo';
+
+export const metadata = createPageMetadata({
+  title: 'Dry Fruits Wholesale & Bulk Orders in Rajampet',
+  description: 'Shop dry fruits, nuts, seeds, honey and combo packs from Dishanth Enterprise in Rajampet, Andhra Pradesh. Explore the collection or enquire about wholesale and bulk orders.',
+  path: '/',
+});
 
 export default function HomePage() {
   return (
     <div className="home-page">
+      <JsonLd data={[websiteJsonLd(), businessJsonLd()]} />
       <HeroSlider />
       <section className="section section--categories">
         <div className="container">

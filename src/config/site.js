@@ -1,7 +1,10 @@
 export const siteConfig = {
   name: 'Dishanth Enterprise',
   shortName: 'Dishanth',
+  url: 'https://dishanthenterprise.in',
   logo: 'https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200507/dishanth-enterprise/assets/dishanth-logo.png',
+  storeImage: 'https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200641/dishanth-enterprise/assets/shop-image.png',
+  ogImage: 'https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200535/dishanth-enterprise/assets/home-hero-01.webp',
   announcement: 'A thoughtful mix for everyday snacking, festive gifting & wholesale needs',
   // Add the WhatsApp number with country code, digits only (example: 919876543210).
   whatsappNumber: '916303105286',
