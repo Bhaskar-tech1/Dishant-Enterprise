@@ -28,6 +28,9 @@ export default function TestimonialsSlider({ testimonials }) {
             <article className="testimonial-card">
               <span className="testimonial-card__mark" aria-hidden="true">“</span>
               <p>{item.quote}</p>
+              <div className="testimonial-card__rating" aria-label={`${item.rating} out of 5 stars`}>
+                {'★★★★★'.slice(0, item.rating)}<span className="sr-only">{item.rating} out of 5 stars</span>
+              </div>
               <div className="testimonial-card__foot">
                 <span className="testimonial-card__avatar">{String(index + 1).padStart(2, '0')}</span>
                 <span><strong>{item.byline}</strong><small>{item.context}</small></span>

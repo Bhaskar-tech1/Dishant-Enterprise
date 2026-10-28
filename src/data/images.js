@@ -5,10 +5,10 @@ export const heroImages = [
 ];
 
 export const homeSliderImages = [
-  '/images/home-hero-01.webp',
-  '/images/home-hero-02.webp',
-  '/images/home-hero-03.webp',
-  '/images/home-hero-04.webp',
+  { desktop: '/images/new_homepage_sliding_img1_laptop.png', mobile: '/images/new_homepage_sliding_img1_mobile.png' },
+  { desktop: '/images/new_homepage_sliding_img2_laptop.png', mobile: '/images/new_homepage_sliding_img2_mobile.png' },
+  { desktop: '/images/new_homepage_sliding_img3_laptop.png', mobile: '/images/new_homepage_sliding_img3_mobile.png' },
+  { desktop: '/images/new_homepage_sliding_img4_laptop.png', mobile: '/images/new_homepage_sliding_img4_mobile.png' },
 ];
 
 export const categoryImages = {
