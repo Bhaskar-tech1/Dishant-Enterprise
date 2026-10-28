@@ -2,15 +2,7 @@ import { randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import initialProducts from '../data/products.json';
-import { clientDb } from './firebase-client';
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  setDoc,
-  deleteDoc,
-} from 'firebase/firestore';
+import { getDb } from './firebase-admin';
 
 const COLLECTION = 'products';
 const LOCAL_DATA_FILE = path.join(process.cwd(), '.data', 'products.json');
@@ -88,7 +80,9 @@ function mutateLocalProducts(mutator) {
 
 export async function getAllProducts() {
   try {
-    const snapshot = await getDocs(collection(clientDb, COLLECTION));
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    const snapshot = await database.collection(COLLECTION).get();
     const products = snapshot.docs.map((docSnap) => ({
       ...docSnap.data(),
       id: docSnap.id,
@@ -107,8 +101,9 @@ export async function getAllProducts() {
 
 export async function getProductById(id) {
   try {
-    const docRef = doc(clientDb, COLLECTION, id);
-    const snap = await getDoc(docRef);
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    const snap = await database.collection(COLLECTION).doc(id).get();
     if (snap.exists()) {
       return { ...snap.data(), id: snap.id };
     }
@@ -133,8 +128,9 @@ export async function addProduct(productData) {
   };
 
   try {
-    const docRef = doc(clientDb, COLLECTION, id);
-    await setDoc(docRef, newProduct);
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    await database.collection(COLLECTION).doc(id).set(newProduct);
   } catch (err) {
     console.error('Error saving to Firestore:', err);
   }
@@ -156,9 +152,11 @@ export async function updateProduct(id, updates) {
 
   let updatedProduct = null;
   try {
-    const docRef = doc(clientDb, COLLECTION, id);
-    await setDoc(docRef, updateData, { merge: true });
-    const snap = await getDoc(docRef);
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    const docRef = database.collection(COLLECTION).doc(id);
+    await docRef.set(updateData, { merge: true });
+    const snap = await docRef.get();
     if (snap.exists()) {
       updatedProduct = { ...snap.data(), id: snap.id };
     }
@@ -180,8 +178,9 @@ export async function updateProduct(id, updates) {
 
 export async function deleteProduct(id) {
   try {
-    const docRef = doc(clientDb, COLLECTION, id);
-    await deleteDoc(docRef);
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    await database.collection(COLLECTION).doc(id).delete();
   } catch (err) {
     console.error('Error deleting from Firestore:', err);
   }
@@ -204,11 +203,13 @@ export async function seedProducts(seedItems) {
   }));
 
   try {
-    await Promise.all(
-      productsToSeed.map((product) =>
-        setDoc(doc(clientDb, COLLECTION, product.id), product, { merge: true })
-      )
-    );
+    const database = getDb();
+    if (!database) throw new Error('Firebase Admin credentials are not configured.');
+    const batch = database.batch();
+    productsToSeed.forEach((product) => {
+      batch.set(database.collection(COLLECTION).doc(product.id), product, { merge: true });
+    });
+    await batch.commit();
   } catch (err) {
     console.error('Error seeding to Firestore:', err);
   }
