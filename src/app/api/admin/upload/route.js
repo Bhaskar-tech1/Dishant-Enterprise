@@ -35,8 +35,12 @@ export async function POST(request) {
       ],
     });
 
+    const optimizedUrl = result.secure_url.includes('/image/upload/')
+      ? result.secure_url.replace('/image/upload/', '/image/upload/f_auto,q_auto/')
+      : result.secure_url;
+
     return NextResponse.json({
-      url: result.secure_url,
+      url: optimizedUrl,
       publicId: result.public_id,
       width: result.width,
       height: result.height,

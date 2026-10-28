@@ -16,8 +16,8 @@ export default function BulkOrdersPage() {
     <main className="bulk-orders-page">
       <section className="bulk-orders-hero">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/images/Bulkorder_page_banner_mobil.png" />
-          <Image src="/images/Bulkorder_page_banner_laptop.png" alt="Dry fruits, gift packs and pantry products prepared for bulk orders" fill priority sizes="100vw" />
+          <source media="(max-width: 767px)" srcSet="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200457/dishanth-enterprise/assets/Bulkorder_page_banner_mobil.png" />
+          <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200433/dishanth-enterprise/assets/Bulkorder_page_banner_laptop.png" alt="Dry fruits, gift packs and pantry products prepared for bulk orders" fill priority sizes="100vw" />
         </picture>
         <div className="bulk-orders-hero__shade" />
         <div className="bulk-orders-hero__content">

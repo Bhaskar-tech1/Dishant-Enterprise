@@ -10,8 +10,8 @@ export default function CombosPage() {
     <>
       <section className="products-hero combos-page-hero">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/images/combos_page_banner_mobile.png" />
-          <Image src="/images/combos_page_banner_laptop.png" alt="Curated dry fruit and snack combinations arranged for gifting" fill priority sizes="100vw" />
+          <source media="(max-width: 767px)" srcSet="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200708/dishanth-enterprise/assets/combos_page_banner_mobile.png" />
+          <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200704/dishanth-enterprise/assets/combos_page_banner_laptop.png" alt="Curated dry fruit and snack combinations arranged for gifting" fill priority sizes="100vw" />
         </picture>
         <div className="products-hero__shade" />
         <div className="container products-hero__content">

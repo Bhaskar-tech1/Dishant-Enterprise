@@ -20,8 +20,8 @@ export default async function ProductsPage({ searchParams }) {
     <>
       <section className="products-hero">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/images/new_productspage_banner_mobile.png" />
-          <Image src="/images/new_productspage_banner_laptop.png" alt="A colourful selection of dry fruits, seeds, snacks and pantry favourites" fill priority sizes="100vw" />
+          <source media="(max-width: 767px)" srcSet="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200602/dishanth-enterprise/assets/new_productspage_banner_mobile.png" />
+          <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200597/dishanth-enterprise/assets/new_productspage_banner_laptop.png" alt="A colourful selection of dry fruits, seeds, snacks and pantry favourites" fill priority sizes="100vw" />
         </picture>
         <div className="products-hero__shade" />
         <div className="container products-hero__content">

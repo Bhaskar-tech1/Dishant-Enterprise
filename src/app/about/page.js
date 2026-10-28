@@ -17,7 +17,7 @@ export default function AboutPage() {
       <section className="about-hero">
         <div className="container about-hero__grid">
           <div className="about-hero__copy"><p className="eyebrow">A little about us</p><h1>Good things belong in everyday life.</h1><p>Dishanth Enterprise brings together a considered range of dry fruits, nuts, seeds, snacks, honey and curated combinations for homes and businesses.</p><Link className="button button--navy" href="/products">Browse the collection <ArrowRight size={17} /></Link></div>
-          <div className="about-hero__image"><Image src="/images/shop-image.png" alt="Inside the Dishanth Enterprise dry fruits and pantry store" fill priority sizes="(max-width: 800px) 100vw, 50vw" /><span className="about-hero__caption">Visit the Dishanth Enterprise store</span></div>
+          <div className="about-hero__image"><Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200641/dishanth-enterprise/assets/shop-image.png" alt="Inside the Dishanth Enterprise dry fruits and pantry store" fill priority sizes="(max-width: 800px) 100vw, 50vw" /><span className="about-hero__caption">Visit the Dishanth Enterprise store</span></div>
           <span className="about-hero__index">01 / OUR APPROACH</span>
         </div>
       </section>

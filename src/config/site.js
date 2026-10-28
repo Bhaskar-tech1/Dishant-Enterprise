@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: 'Dishanth Enterprise',
   shortName: 'Dishanth',
-  logo: '/images/dishanth-logo.png',
+  logo: 'https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200507/dishanth-enterprise/assets/dishanth-logo.png',
   announcement: 'A thoughtful mix for everyday snacking, festive gifting & wholesale needs',
   // Add the WhatsApp number with country code, digits only (example: 919876543210).
   whatsappNumber: '916303105286',

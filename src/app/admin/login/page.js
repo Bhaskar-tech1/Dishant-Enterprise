@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
       <div className="admin-login-card">
         <div className="admin-login-header">
           <div className="admin-login-logo">
-            <Image src="/images/dishanth-logo.png" alt="Dishanth Enterprise" width={72} height={72} priority />
+            <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200507/dishanth-enterprise/assets/dishanth-logo.png" alt="Dishanth Enterprise" width={72} height={72} priority />
           </div>
           <h1>Store Admin</h1>
           <p>Please sign in to manage the store.</p>

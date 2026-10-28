@@ -220,7 +220,7 @@ export default function AdminDashboardPage() {
         <div className="admin-nav-left">
           <div className="admin-brand">
             <Link href="/" className="admin-logo-circle" title="Go to storefront home" aria-label="Go to storefront home">
-              <Image src="/images/dishanth-logo.png" alt="Dishanth Enterprise" width={38} height={38} priority />
+              <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200507/dishanth-enterprise/assets/dishanth-logo.png" alt="Dishanth Enterprise" width={38} height={38} priority />
             </Link>
             <div className="admin-brand-text">
               <h1 className="admin-brand-title">Dishanth Enterprise</h1>
