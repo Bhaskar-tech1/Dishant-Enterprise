@@ -21,6 +21,7 @@ export const metadata = {
   },
   twitter: { card: 'summary_large_image', title: 'Dishanth Enterprise | Dry Fruits Wholesale & Bulk Orders in Rajampet', description: 'Dry fruits, nuts, seeds, honey and combo packs from Rajampet, Andhra Pradesh.', images: [siteConfig.ogImage] },
   robots: { index: true, follow: true },
+  verification: { google: '9Bw2j7uUxiUEt_lE9ST_R4hT2raUE2nhz0JVt5KO5Qc' },
   icons: {
     icon: [{ url: '/favicon-48x48.png', type: 'image/png', sizes: '48x48' }, { url: '/images/dishanth-logo.png', type: 'image/png' }],
     apple: '/apple-touch-icon.png',
