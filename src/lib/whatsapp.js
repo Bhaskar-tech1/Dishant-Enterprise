@@ -16,10 +16,11 @@ export function openWhatsAppMessage(message) {
   return 'opened';
 }
 
-export function buildOrderMessage(lines, subtotal) {
+export function buildOrderMessage(lines, subtotal, customer = {}) {
   const items = lines.map(({ product, variantLabel, quantity, price }) => {
     const lineTotal = quantity * price;
     return `• ${product.name}${variantLabel ? ` (${variantLabel})` : ''}\n  ${quantity} × ${formatCurrency(price)} = ${formatCurrency(lineTotal)}`;
   }).join('\n');
-  return `Hello ${siteConfig.name}, I would like to enquire about this order:\n\n${items}\n\nCart subtotal: ${formatCurrency(subtotal)}\n\nPlease share availability and delivery details.`;
+  const customerDetails = customer.name ? `Customer details:\nName: ${customer.name}\nPhone: ${customer.phone}\nDelivery address: ${customer.address}\nPIN code: ${customer.pin}\n\n` : '';
+  return `Hello ${siteConfig.name}, I would like to enquire about this order:\n\n${customerDetails}${items}\n\nCart subtotal: ${formatCurrency(subtotal)}\n\nPlease share availability and delivery details.`;
 }
