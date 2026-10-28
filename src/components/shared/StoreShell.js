@@ -9,10 +9,10 @@ export default function StoreShell({ children }) {
   const isAdmin = pathname?.startsWith('/admin');
 
   return (
-    <>
+    <div className="store-shell">
       {!isAdmin && <SiteHeader />}
-      <main>{children}</main>
+      <main className="store-main">{children}</main>
       {!isAdmin && <SiteFooter />}
-    </>
+    </div>
   );
 }

@@ -41,11 +41,13 @@ export default function SiteHeader() {
 
   useEffect(() => {
     if (!open) return undefined;
+    document.body.style.overflow = 'hidden';
     const closeOnEscape = (event) => {
       if (event.key === 'Escape') setOpen(false);
     };
     window.addEventListener('keydown', closeOnEscape);
     return () => {
+      document.body.style.overflow = '';
       window.removeEventListener('keydown', closeOnEscape);
     };
   }, [open]);
