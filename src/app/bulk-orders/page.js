@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { BadgePercent, Boxes, Building2, Gift, Store } from 'lucide-react';
 import BulkEnquiryForm from '@/components/forms/BulkEnquiryForm';
 
@@ -14,11 +15,15 @@ export default function BulkOrdersPage() {
   return (
     <main className="bulk-orders-page">
       <section className="bulk-orders-hero">
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/Bulkorder_page_banner_mobil.png" />
+          <Image src="/images/Bulkorder_page_banner_laptop.png" alt="Dry fruits, gift packs and pantry products prepared for bulk orders" fill priority sizes="100vw" />
+        </picture>
         <div className="bulk-orders-hero__shade" />
         <div className="bulk-orders-hero__content">
           <span className="bulk-orders-hero__badge"><Building2 size={15} /> Premium partners</span>
           <h1>Corporate &amp; Bulk Orders</h1>
-          <p>Authentic Indian snacks and dry fruits for gifting, events and wholesale, prepared with care by Dishanth Enterprises.</p>
+          <p>Authentic Indian snacks and dry fruits for gifting, events and wholesale, prepared with care by Dishanth Enterprise.</p>
         </div>
       </section>
 
