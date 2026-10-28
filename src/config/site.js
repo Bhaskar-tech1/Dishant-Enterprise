@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: 'Dishanth Enterprises',
+  name: 'Dishanth Enterprise',
   shortName: 'Dishanth',
   logo: '/images/dishanth-logo.png',
   announcement: 'A thoughtful mix for everyday snacking, festive gifting & wholesale needs',

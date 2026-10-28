@@ -5,8 +5,8 @@ import ScrollAnimations from '@/components/shared/ScrollAnimations';
 import { siteConfig } from '@/config/site';
 
 export const metadata = {
-  title: { default: 'Dishanth Enterprises | Thoughtful pantry favourites', template: '%s | Dishanth Enterprises' },
-  description: 'Explore nuts, dry fruits, seeds, snacks, honey and curated combinations from Dishanth Enterprises.',
+  title: { default: 'Dishanth Enterprise | Thoughtful pantry favourites', template: '%s | Dishanth Enterprise' },
+  description: 'Explore nuts, dry fruits, seeds, snacks, honey and curated combinations from Dishanth Enterprise.',
   icons: { icon: siteConfig.logo },
 };
 

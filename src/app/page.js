@@ -12,13 +12,13 @@ import { heroImages, productImages } from '@/data/images';
 
 export default function HomePage() {
   return (
-    <>
+    <div className="home-page">
       <HeroSlider />
       <section className="section section--categories">
         <div className="container">
           <SectionHeading eyebrow="A place for every craving" title="Shop by category" text="Find something for the pantry, the snack bowl, or a moment worth celebrating." />
-          <div className="category-grid" data-aos="fade-up">
-            {homeCategories.map((category) => <CategoryCard key={category.id} category={category} />)}
+          <div className="category-grid">
+            {homeCategories.map((category, index) => <div key={category.id} data-aos="fade-up" data-aos-delay={index * 70}><CategoryCard category={category} /></div>)}
           </div>
         </div>
       </section>
@@ -91,11 +91,11 @@ export default function HomePage() {
 
       <section className="section section--testimonials">
         <div className="container">
-          <SectionHeading eyebrow="A note on service" title="Built around real needs" text="These sample cards are placeholders for customer-approved feedback." />
+          <SectionHeading eyebrow="What customers appreciate" title="Thoughtful choices, shared often" text="A few words about the quality, care and service behind every order." />
           <TestimonialsSlider testimonials={testimonials} />
         </div>
       </section>
-      <div className="home-endline"><span>Good things, gathered with care</span><span className="home-endline__rule" /><span>Dishanth Enterprises</span></div>
-    </>
+      <div className="home-endline"><span>Good things, gathered with care</span><span className="home-endline__rule" /><span>Dishanth Enterprise</span></div>
+    </div>
   );
 }

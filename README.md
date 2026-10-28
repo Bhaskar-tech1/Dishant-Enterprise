@@ -1,4 +1,4 @@
-# Dishanth Enterprises storefront
+# Dishanth Enterprise storefront
 
 Phase 1 customer-facing storefront built with Next.js App Router, JavaScript, React, Tailwind CSS, Swiper, AOS and Lucide React.
 

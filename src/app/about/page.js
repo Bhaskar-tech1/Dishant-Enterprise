@@ -11,7 +11,7 @@ export default function AboutPage() {
     <>
       <section className="about-hero">
         <div className="container about-hero__grid">
-          <div className="about-hero__copy"><p className="eyebrow">A little about us</p><h1>Good things belong in everyday life.</h1><p>Dishanth Enterprises brings together a considered range of dry fruits, nuts, seeds, snacks, honey and curated combinations for homes and businesses.</p><Link className="button button--navy" href="/products">Browse the collection <ArrowRight size={17} /></Link></div>
+          <div className="about-hero__copy"><p className="eyebrow">A little about us</p><h1>Good things belong in everyday life.</h1><p>Dishanth Enterprise brings together a considered range of dry fruits, nuts, seeds, snacks, honey and curated combinations for homes and businesses.</p><Link className="button button--navy" href="/products">Browse the collection <ArrowRight size={17} /></Link></div>
           <div className="about-hero__image"><Image src={heroImages[0]} alt="A collection of pantry favourites arranged on a dark tabletop" fill priority sizes="(max-width: 800px) 100vw, 50vw" /><span className="about-hero__caption">A collection of pantry favourites</span></div>
           <span className="about-hero__index">01 / OUR APPROACH</span>
         </div>
@@ -26,9 +26,9 @@ export default function AboutPage() {
       </section>
       <section className="section about-store" aria-labelledby="about-store-title">
         <div className="container">
-          <div className="about-store__heading"><h2 id="about-store-title">Visit our store</h2><span aria-hidden="true" /><p>Find Dishanth Enterprises in Rajampet, Andhra Pradesh.</p></div>
+          <div className="about-store__heading"><h2 id="about-store-title">Visit our store</h2><span aria-hidden="true" /><p>Find Dishanth Enterprise in Rajampet, Andhra Pradesh.</p></div>
           <a className="about-store__address" href={siteConfig.locationUrl} target="_blank" rel="noreferrer">{siteConfig.address} <ArrowRight size={16} /></a>
-          <div className="about-store__map"><iframe title="Map showing Dishanth Enterprises in Rajampet" src={siteConfig.mapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
+          <div className="about-store__map"><iframe title="Map showing Dishanth Enterprise in Rajampet" src={siteConfig.mapEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen /></div>
         </div>
       </section>
     </>

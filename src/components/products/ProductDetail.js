@@ -25,7 +25,7 @@ export default function ProductDetail({ product, category, relatedProducts }) {
     const url = window.location.href;
     try {
       if (navigator.share) {
-        await navigator.share({ title: product.name, text: `${product.name} from Dishanth Enterprises`, url });
+        await navigator.share({ title: product.name, text: `${product.name} from Dishanth Enterprise`, url });
         setShareMessage('Product shared.');
       } else {
         await navigator.clipboard.writeText(url);
@@ -69,7 +69,7 @@ export default function ProductDetail({ product, category, relatedProducts }) {
                 <Image src={product.image} alt={product.imageAlt || product.name} fill priority sizes="(max-width: 820px) 100vw, 50vw" />
                 {product.featured && <span className="detail-featured">Featured selection</span>}
               </div>
-              <p className="detail-image-caption"><span>Dishanth Enterprises</span><span>Thoughtful pantry favourites</span></p>
+              <p className="detail-image-caption"><span>Dishanth Enterprise</span><span>Thoughtful pantry favourites</span></p>
             </div>
 
             <div className="detail-copy">

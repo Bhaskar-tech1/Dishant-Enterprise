@@ -21,7 +21,15 @@ export default function SiteHeader() {
   const pathname = usePathname();
   const { count } = useCart();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    const updateScrollState = () => setScrolled(window.scrollY > 18);
+    updateScrollState();
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    return () => window.removeEventListener('scroll', updateScrollState);
+  }, []);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -37,11 +45,11 @@ export default function SiteHeader() {
   return (
     <>
       <div className="announcement"><span className="announcement__dot" />{siteConfig.announcement}<Link href="/bulk-orders">Enquire for bulk orders <span aria-hidden="true">→</span></Link></div>
-      <header className={`site-header ${open ? 'is-open' : ''}`}>
+      <header className={`site-header ${open ? 'is-open' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="container site-header__inner">
-          <Link href="/" className="brand" aria-label="Dishanth Enterprises home" onClick={close}>
+          <Link href="/" className="brand" aria-label="Dishanth Enterprise home" onClick={close}>
             <span className="brand__logo"><Image src={siteConfig.logo} alt="" width={58} height={58} priority /></span>
-            <span className="brand__name">Dishanth<span>Enterprises</span></span>
+            <span className="brand__name">Dishanth<span>Enterprise</span></span>
           </Link>
           <nav className="desktop-nav" aria-label="Main navigation">
             {links.map((link) => <Link key={link.href} href={link.href} className={pathname === link.href ? 'is-active' : ''} aria-current={pathname === link.href ? 'page' : undefined}>{link.label}</Link>)}

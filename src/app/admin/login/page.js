@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
       <div className="admin-login-card">
         <div className="admin-login-header">
           <div className="admin-login-logo">
-            <Image src="/images/dishanth-logo.png" alt="Dishanth Enterprises" width={72} height={72} priority />
+            <Image src="/images/dishanth-logo.png" alt="Dishanth Enterprise" width={72} height={72} priority />
           </div>
           <h1>Store Admin</h1>
           <p>Please sign in to manage the store.</p>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <p className="admin-login-footer">Dishanth Enterprises Admin Portal</p>
+        <p className="admin-login-footer">Dishanth Enterprise Admin Portal</p>
       </div>
     </div>
   );
