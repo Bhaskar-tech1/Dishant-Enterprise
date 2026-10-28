@@ -18,10 +18,23 @@ export default function AdminDashboardPage() {
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [stockFilter, setStockFilter] = useState('all'); // 'all' | 'inStock' | 'outOfStock'
   const [message, setMessage] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     checkAuthAndLoad();
   }, []);
+
+  useEffect(() => {
+    if (!deleteTarget) return undefined;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && !isDeleting) {
+        setDeleteTarget(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [deleteTarget, isDeleting]);
 
   async function checkAuthAndLoad() {
     try {
@@ -97,23 +110,29 @@ export default function AdminDashboardPage() {
     }
   }
 
-  async function handleDelete(product) {
-    const confirmed = window.confirm(`Are you sure you want to delete "${product.name}"?`);
-    if (!confirmed) return;
+  function handleDelete(product) {
+    setDeleteTarget(product);
+  }
 
-    setActionLoadingId(product.id);
+  async function confirmDelete() {
+    if (!deleteTarget) return;
+    const target = deleteTarget;
+    setIsDeleting(true);
+    setActionLoadingId(target.id);
     try {
-      const res = await fetch(`/api/products/${product.id}`, { method: 'DELETE' });
+      const res = await fetch(`/api/products/${target.id}`, { method: 'DELETE' });
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
-        setProducts((prev) => prev.filter((p) => p.id !== product.id));
-        showMessage(`Deleted "${product.name}"`);
+        setProducts((prev) => prev.filter((p) => p.id !== target.id));
+        showMessage(`Deleted "${target.name}"`);
+        setDeleteTarget(null);
       } else {
         alert(data.error || 'Could not delete product. Please try again.');
       }
     } catch {
       alert('Error deleting product.');
     } finally {
+      setIsDeleting(false);
       setActionLoadingId(null);
     }
   }
@@ -218,22 +237,18 @@ export default function AdminDashboardPage() {
       {/* Top Navigation Bar matching Image 2 */}
       <header className="admin-nav-bar">
         <div className="admin-nav-left">
-          <div className="admin-brand">
-            <Link href="/" className="admin-logo-circle" title="Go to storefront home" aria-label="Go to storefront home">
+          <Link href="/" className="admin-brand" title="Go to storefront home" aria-label="Go to storefront home">
+            <span className="admin-logo-circle">
               <Image src="https://res.cloudinary.com/sdca0kub/image/upload/f_auto,q_auto/v1793200507/dishanth-enterprise/assets/dishanth-logo.png" alt="Dishanth Enterprise" width={38} height={38} priority />
-            </Link>
+            </span>
             <div className="admin-brand-text">
               <h1 className="admin-brand-title">Dishanth Enterprise</h1>
               <span className="admin-brand-subtitle">ADMIN PORTAL</span>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="admin-nav-right">
-          <Link href="/admin/announcement" className="admin-announcement-btn">
-            <Megaphone size={17} />
-            <span>Announcement</span>
-          </Link>
           <Link href="/admin/products/new" className="admin-primary-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -362,6 +377,10 @@ export default function AdminDashboardPage() {
               </>
             )}
           </span>
+          <Link href="/admin/announcement" className="admin-announcement-btn">
+            <Megaphone size={16} />
+            <span>Announcement</span>
+          </Link>
           <button
             onClick={loadProducts}
             className="admin-refresh-btn"
@@ -705,6 +724,53 @@ export default function AdminDashboardPage() {
           )}
         </section>
       </main>
+
+      {/* Delete Confirmation Modal matching Reference Image */}
+      {deleteTarget && (
+        <div
+          className="admin-modal-backdrop"
+          onClick={() => !isDeleting && setDeleteTarget(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="admin-delete-title"
+        >
+          <div
+            className="admin-delete-modal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="admin-delete-icon-wrap" aria-hidden="true">
+              <Trash2 size={24} color="#dc2626" strokeWidth={2.2} />
+            </div>
+
+            <h2 id="admin-delete-title" className="admin-delete-title">
+              Delete Product?
+            </h2>
+
+            <p className="admin-delete-text">
+              Are you sure you want to delete <strong>{deleteTarget.name}</strong>? This action cannot be undone and it will be permanently removed from your database.
+            </p>
+
+            <div className="admin-delete-actions">
+              <button
+                type="button"
+                className="admin-delete-btn-cancel"
+                onClick={() => setDeleteTarget(null)}
+                disabled={isDeleting}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                className="admin-delete-btn-confirm"
+                onClick={confirmDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? 'Deleting...' : 'Yes, Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

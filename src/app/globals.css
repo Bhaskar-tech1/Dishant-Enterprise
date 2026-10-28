@@ -1553,6 +1553,8 @@ body:has(.admin-login-page) .announcement {
   display: flex;
   align-items: center;
   gap: 12px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .admin-logo-circle {
@@ -2135,23 +2137,26 @@ body:has(.admin-login-page) .announcement {
   .admin-mobile-card-list {
     display: flex;
     flex-direction: column;
-    background: #ffffff;
-    border: 1px solid #eae5db;
-    border-radius: 16px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
-    overflow: hidden;
+    gap: 10px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
   }
 }
 
 .admin-mob-card-item {
   padding: 16px;
-  border-bottom: 1px solid #f1ece4;
+  border: 1px solid #eae5db;
+  border-radius: 14px;
   background: #ffffff;
+  box-shadow: 0 3px 10px rgba(16,38,83,.05);
   transition: background 0.15s;
 }
 
 .admin-mob-card-item:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid #eae5db;
 }
 
 .admin-mob-card-item.operating {
@@ -2873,16 +2878,16 @@ body:has(.admin-login-page) .announcement {
 
 @media (max-width: 480px) {
   .admin-nav-bar {
-    height: auto;
-    min-height: 108px;
-    flex-wrap: wrap;
-    gap: 7px;
-    padding: 8px 14px;
+    height: 64px;
+    min-height: 64px;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 7px 12px;
   }
 
   .admin-nav-left,
   .admin-nav-right {
-    width: 100%;
+    width: auto;
   }
 
   .admin-nav-left {
@@ -2894,9 +2899,9 @@ body:has(.admin-login-page) .announcement {
     gap: 8px;
   }
 
-  .admin-logo-circle { width: 40px; height: 40px; }
-  .admin-brand-title { font-size: 18px; }
-  .admin-brand-subtitle { font-size: 9px; }
+  .admin-logo-circle { width: 38px; height: 38px; }
+  .admin-brand-title { font-size: 16px; }
+  .admin-brand-subtitle { font-size: 8.5px; }
 
   .admin-header-title {
     font-size: 15px;
@@ -2905,13 +2910,13 @@ body:has(.admin-login-page) .announcement {
   .admin-nav-right {
     justify-content: flex-end;
     gap: 8px;
+    margin-left: auto;
   }
 
   .admin-nav-right .admin-primary-btn,
   .admin-nav-right .admin-announcement-btn,
   .admin-nav-right .admin-logout-btn { min-height: 40px; height: 40px; }
-  .admin-nav-right .admin-primary-btn { padding: 8px 14px; }
-  .admin-nav-right .admin-announcement-btn { width: 40px; justify-content: center; padding: 8px; }
+  .admin-nav-right .admin-primary-btn { padding: 7px 10px; font-size: 12px; }
   .admin-nav-right .admin-logout-btn { width: 40px; }
   .admin-main-content { padding: 18px 14px 36px; }
   .admin-stats-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
@@ -2997,8 +3002,8 @@ body:has(.admin-login-page) .announcement {
 
 @media (max-width: 600px) {
   .announcement--managed { display: flex; min-height: 36px; gap: 7px; padding: 8px 14px; font-size: 11px; line-height: 1.35; }
-  .admin-announcement-btn { padding: 8px 10px; font-size: 12px; }
-  .admin-announcement-btn span { display: none; }
+  .admin-announcement-btn { padding: 6px 8px; gap: 5px; font-size: 11px; white-space: nowrap; }
+  .admin-announcement-btn span { display: inline; }
   .announcement-manager { width: min(100% - 20px, 100%); margin: 12px auto 20px; }
   .announcement-manager__card { padding: 14px; border-radius: 12px; }
   .announcement-manager__heading { align-items: flex-start; gap: 10px; }
@@ -3018,6 +3023,13 @@ body:has(.admin-login-page) .announcement {
   .announcement-save { width: 100%; min-height: 38px; }
 }
 
+@media (max-width: 480px) {
+  .admin-table-meta-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; margin-inline: 0; }
+  .admin-meta-count { min-width: 0; overflow: hidden; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; }
+  .admin-announcement-btn { flex: 0 0 auto; }
+  .admin-refresh-btn { gap: 4px; padding-inline: 3px; font-size: 12px; white-space: nowrap; }
+}
+
 /* Universal overflow protection to ensure no mobile sliding/horizontal scroll */
 [data-aos] {
   pointer-events: auto;
@@ -3034,5 +3046,141 @@ body.aos-initialized {
     max-width: 100vw !important;
   }
 }
+
+/* ========================================================
+   Admin Delete Confirmation Modal (matching Image 2)
+======================================================== */
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(17, 24, 39, 0.42);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  animation: adminModalFadeIn 0.18s ease-out;
+}
+
+.admin-delete-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 34px 28px 26px;
+  text-align: center;
+  box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.22), 0 8px 18px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  animation: adminModalZoomIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-delete-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fef2f2;
+  border: 1px solid #fee2e2;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+}
+
+.admin-delete-title {
+  margin: 0 0 10px;
+  color: #111827;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.admin-delete-text {
+  margin: 0 0 24px;
+  color: #6b7280;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.admin-delete-text strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.admin-delete-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.admin-delete-btn-cancel,
+.admin-delete-btn-confirm {
+  flex: 1;
+  min-height: 44px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-delete-btn-cancel {
+  border: 1px solid #e5e7eb;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.admin-delete-btn-cancel:hover:not(:disabled) {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.admin-delete-btn-confirm {
+  border: none;
+  background: #dc2626;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.28);
+}
+
+.admin-delete-btn-confirm:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(220, 38, 38, 0.35);
+}
+
+.admin-delete-btn-cancel:disabled,
+.admin-delete-btn-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@keyframes adminModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes adminModalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.93) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
 
 
