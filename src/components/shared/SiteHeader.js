@@ -6,6 +6,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, ShoppingBag, X } from 'lucide-react';
 import { siteConfig } from '@/config/site';
+import {
+  ANNOUNCEMENT_BACKGROUNDS,
+  ANNOUNCEMENT_TEXT_COLORS,
+  DEFAULT_ANNOUNCEMENT,
+  getAnnouncementColor,
+  normalizeAnnouncement,
+} from '@/config/announcement';
 import { useCart } from '@/context/CartContext';
 
 const links = [
@@ -13,7 +20,7 @@ const links = [
   { href: '/products', label: 'Products' },
   { href: '/combos', label: 'Combos' },
   { href: '/bulk-orders', label: 'Bulk orders' },
-  { href: '/about', label: 'Our story' },
+  { href: '/about', label: 'About us' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -22,6 +29,7 @@ export default function SiteHeader() {
   const { count } = useCart();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [announcement, setAnnouncement] = useState(DEFAULT_ANNOUNCEMENT);
   const close = () => setOpen(false);
 
   useEffect(() => {
@@ -42,9 +50,29 @@ export default function SiteHeader() {
     };
   }, [open]);
 
+  useEffect(() => {
+    let active = true;
+    fetch('/api/announcement', { cache: 'no-store' })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data) => {
+        if (active && data) setAnnouncement(normalizeAnnouncement(data));
+      })
+      .catch(() => {});
+    return () => { active = false; };
+  }, []);
+
+  const announcementStyle = {
+    backgroundColor: getAnnouncementColor(ANNOUNCEMENT_BACKGROUNDS, announcement.backgroundColor, '#07183d'),
+    color: getAnnouncementColor(ANNOUNCEMENT_TEXT_COLORS, announcement.textColor, '#fffaf2'),
+  };
+
   return (
     <>
-      <div className="announcement"><span className="announcement__dot" />{siteConfig.announcement}<Link href="/bulk-orders">Enquire for bulk orders <span aria-hidden="true">→</span></Link></div>
+      {announcement.enabled && (
+        <div className="announcement announcement--managed" style={announcementStyle} role="status">
+          <span>{announcement.message}</span>
+        </div>
+      )}
       <header className={`site-header ${open ? 'is-open' : ''} ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="container site-header__inner">
           <Link href="/" className="brand" aria-label="Dishanth Enterprise home" onClick={close}>

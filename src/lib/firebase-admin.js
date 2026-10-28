@@ -1,4 +1,4 @@
-﻿import { applicationDefault, cert, getApps, initializeApp } from 'firebase-admin/app';
+import { applicationDefault, cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
 function getRawServiceAccount() {
@@ -41,10 +41,16 @@ function readServiceAccount() {
   const clientEmail = getClientEmail();
   const privateKey = getPrivateKey();
   if (clientEmail && privateKey) {
+    const cleanEmail = clientEmail.replace(/["']/g, '').trim();
+    let cleanKey = privateKey.trim();
+    if (cleanKey.startsWith('"') && cleanKey.endsWith('"')) {
+      cleanKey = cleanKey.slice(1, -1);
+    }
+    cleanKey = cleanKey.replace(/\\n/g, '\n');
     return {
       project_id: process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-      client_email: clientEmail,
-      private_key: privateKey.replace(/\\n/g, '\n'),
+      client_email: cleanEmail,
+      private_key: cleanKey,
     };
   }
 

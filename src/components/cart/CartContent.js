@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { ArrowLeft, Minus, Plus, ShoppingBag, Trash2, X, Send } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useCart } from '@/context/CartContext';
-import { findProduct } from '@/data/products';
 import { formatCurrency } from '@/lib/pricing';
 import { buildOrderMessage, openWhatsAppMessage } from '@/lib/whatsapp';
 
@@ -14,7 +13,7 @@ export default function CartContent() {
   const [feedback, setFeedback] = useState('');
   const [orderFormOpen, setOrderFormOpen] = useState(false);
   const lines = items.map((item) => {
-    const product = item.product || findProduct(item.productId);
+    const product = item.product;
     if (!product) return null;
     const variant = item.variant || product.variants?.find((option) => option.id === item.variantId);
     const price = Number(item.price ?? variant?.salePrice ?? product.salePrice ?? 0);

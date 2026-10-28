@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Package, PackageOpen, X, RotateCw, PackageX, Pencil, Trash2 } from 'lucide-react';
+import { Boxes, LayoutGrid, Package, PackageOpen, X, RotateCw, PackageX, Pencil, Trash2, Megaphone } from 'lucide-react';
 import { formatCurrency } from '@/lib/pricing';
 
 export default function AdminDashboardPage() {
@@ -15,6 +15,7 @@ export default function AdminDashboardPage() {
   const [actionLoadingId, setActionLoadingId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('all'); // 'all' | 'product' | 'combo'
+  const [categoryFilter, setCategoryFilter] = useState('all');
   const [stockFilter, setStockFilter] = useState('all'); // 'all' | 'inStock' | 'outOfStock'
   const [message, setMessage] = useState(null);
 
@@ -147,12 +148,18 @@ export default function AdminDashboardPage() {
   const totalCount = products.length;
   const productCount = products.filter((p) => p.type === 'product').length;
   const comboCount = products.filter((p) => p.type === 'combo').length;
+  const productCategories = useMemo(() => (
+    [...new Set(products.filter((item) => item.type === 'product' && item.category).map((item) => item.category))].sort()
+  ), [products]);
 
   // Filter products
   const filteredProducts = useMemo(() => {
     return products.filter((item) => {
       // Type filter
       if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+
+      // Product category filter
+      if (typeFilter === 'product' && categoryFilter !== 'all' && item.category !== categoryFilter) return false;
 
       // Stock filter
       if (stockFilter === 'inStock' && item.inStock === false) return false;
@@ -169,7 +176,7 @@ export default function AdminDashboardPage() {
 
       return true;
     });
-  }, [products, typeFilter, stockFilter, searchQuery]);
+  }, [products, typeFilter, categoryFilter, stockFilter, searchQuery]);
 
   // Helper to extract pricing info
   function getPriceDisplay(item) {
@@ -223,6 +230,10 @@ export default function AdminDashboardPage() {
         </div>
 
         <div className="admin-nav-right">
+          <Link href="/admin/announcement" className="admin-announcement-btn">
+            <Megaphone size={17} />
+            <span>Announcement</span>
+          </Link>
           <Link href="/admin/products/new" className="admin-primary-btn">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -251,15 +262,15 @@ export default function AdminDashboardPage() {
         {/* 3 Metric Summary Cards matching Image 2 */}
         <section className="admin-stats-grid">
           <div className="admin-stat-card">
-            <span className="admin-stat-label">Total</span>
+            <div className="admin-stat-card__top"><span className="admin-stat-icon admin-stat-icon--total"><LayoutGrid size={17} /></span><span className="admin-stat-label">Total</span></div>
             <span className="admin-stat-value">{totalCount}</span>
           </div>
           <div className="admin-stat-card">
-            <span className="admin-stat-label">Products</span>
+            <div className="admin-stat-card__top"><span className="admin-stat-icon admin-stat-icon--products"><PackageOpen size={17} /></span><span className="admin-stat-label">Products</span></div>
             <span className="admin-stat-value">{productCount}</span>
           </div>
           <div className="admin-stat-card">
-            <span className="admin-stat-label">Combos</span>
+            <div className="admin-stat-card__top"><span className="admin-stat-icon admin-stat-icon--combos"><Boxes size={17} /></span><span className="admin-stat-label">Combos</span></div>
             <span className="admin-stat-value">{comboCount}</span>
           </div>
         </section>
@@ -288,7 +299,7 @@ export default function AdminDashboardPage() {
             
             {/* Type filters */}
             <button
-              onClick={() => setTypeFilter('all')}
+              onClick={() => { setTypeFilter('all'); setCategoryFilter('all'); }}
               className={`admin-pill ${typeFilter === 'all' ? 'active' : ''}`}
             >
               All
@@ -300,13 +311,23 @@ export default function AdminDashboardPage() {
               Products
             </button>
             <button
-              onClick={() => setTypeFilter('combo')}
+              onClick={() => { setTypeFilter('combo'); setCategoryFilter('all'); }}
               className={`admin-pill ${typeFilter === 'combo' ? 'active' : ''}`}
             >
               Combos
             </button>
 
             <span className="admin-pills-divider" />
+
+            {typeFilter === 'product' && (
+              <label className="admin-category-filter">
+                <span>Category</span>
+                <select value={categoryFilter} onChange={(event) => setCategoryFilter(event.target.value)} aria-label="Filter products by category">
+                  <option value="all">All categories</option>
+                  {productCategories.map((category) => <option key={category} value={category}>{category.replace(/-/g, ' ')}</option>)}
+                </select>
+              </label>
+            )}
 
             {/* Stock filters */}
             <button

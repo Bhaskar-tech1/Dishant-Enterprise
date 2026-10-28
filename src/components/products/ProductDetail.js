@@ -131,7 +131,7 @@ export default function ProductDetail({ product, category, relatedProducts }) {
 
           <section className="detail-about" aria-labelledby="detail-about-title">
             <div><p className="eyebrow">A little more about it</p><h2 id="detail-about-title">A good pick for your pantry.</h2></div>
-            <p>{product.description} Choose the pack that suits your table, then add it to your selection. For product or order questions, <Link href="/contact">get in touch with our team</Link>.</p>
+            <p>{product.description ? `${product.description.replace(/\.?$/, '.')}` : ''} Choose the pack that suits your table, then add it to your selection.</p>
             <div className="detail-about-tags"><span>{product.type === 'combo' ? 'Curated selection' : category?.label || 'Dishanth collection'}</span>{selectedVariant && <span>{selectedVariant.label} pack</span>}</div>
           </section>
         </div>
