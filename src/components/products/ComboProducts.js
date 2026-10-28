@@ -50,5 +50,5 @@ export default function ComboProducts() {
     );
   }
 
-  return <div className="product-grid product-grid--catalogue">{combos.map((product) => <ProductCard key={product.id} product={product} />)}</div>;
+  return <div className={`product-grid product-grid--catalogue combo-products-grid${combos.length === 1 ? ' combo-products-grid--single' : ''}`}>{combos.map((product) => <ProductCard key={product.id} product={product} />)}</div>;
 }

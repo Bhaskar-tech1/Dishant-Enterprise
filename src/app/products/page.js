@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import ProductCatalogue from '@/components/products/ProductCatalogue';
 import { getAllProducts } from '@/lib/products-store';
 
@@ -17,14 +18,16 @@ export default async function ProductsPage({ searchParams }) {
 
   return (
     <>
-      <section className="page-intro page-intro--catalogue">
-        <div className="container page-intro__inner">
-          <div>
-            <p className="eyebrow">The Dishanth collection</p>
-            <h1>Explore our products</h1>
-            <p>Browse pantry favourites, easy snacks and thoughtful selections for sharing.</p>
-          </div>
-          <span className="page-intro__note"><span>01</span> A sample catalogue for preview</span>
+      <section className="products-hero">
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/new_productspage_banner_mobile.png" />
+          <Image src="/images/new_productspage_banner_laptop.png" alt="A colourful selection of dry fruits, seeds, snacks and pantry favourites" fill priority sizes="100vw" />
+        </picture>
+        <div className="products-hero__shade" />
+        <div className="container products-hero__content">
+          <p className="eyebrow">The Dishanth collection</p>
+          <h1>Explore our products</h1>
+          <p>Browse pantry favourites, easy snacks and thoughtful selections for sharing.</p>
         </div>
       </section>
       <section className="section section--catalogue">
